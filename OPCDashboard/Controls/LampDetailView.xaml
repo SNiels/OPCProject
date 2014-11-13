@@ -1,0 +1,18 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:OPCDashboard.ViewModels"
+             xmlns:ctrls="clr-namespace:CustomControls;assembly=Controls"
+             x:Class="OPCDashboard.Controls.LampDetailView"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <TextBox Text="{Binding Name}" Margin="8"/>
+        <CheckBox IsChecked="{Binding Value}" Margin="8">
+            Brand
+        </CheckBox>
+        <Button Content="Update" Command="{Binding UpdateLampCommand}" Margin="8"/>
+    </StackPanel>
+</UserControl>
