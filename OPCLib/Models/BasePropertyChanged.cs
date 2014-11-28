@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace OPCLib.ViewModels
+namespace OPCLib.Models
 {
-    public class BaseVM:INotifyPropertyChanged
+    public class BasePropertyChanged:INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

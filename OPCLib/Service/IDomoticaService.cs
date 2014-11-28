@@ -14,5 +14,13 @@ namespace OPCLib.Service
     {
         [WebGet(ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<WCFNode> GetWCFNodes();
+
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "GetWCFNodeValue/{itemId}")]
+        object GetWCFNodeValue(string itemID);
+
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "SetWCFNodeValue/{itemId}/{value}")]
+        object SetWCFNode(string itemID, string value);
     }
 }

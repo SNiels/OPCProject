@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BasePropertyChanged.cs" />
     <Compile Include="Models\Heather.cs" />
     <Compile Include="Models\OPCNodeWrapper.cs" />
     <Compile Include="Models\OPCServerWrapper.cs" />

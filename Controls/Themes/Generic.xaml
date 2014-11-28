@@ -52,9 +52,24 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CCHeather}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border x:Name="PART_boder"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="HeatherStates">
+                                <VisualState Name="Off">
+                                    <Storyboard>
+                                        <ColorAnimation To="Blue" Storyboard.TargetName="PART_boder" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState Name="On">
+                                    <Storyboard>
+                                        <ColorAnimation To="Red" Storyboard.TargetName="PART_boder" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

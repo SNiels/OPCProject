@@ -94,20 +94,27 @@ namespace OPCDashboard
 
             foreach (Heather heather in heathers)
             {
-                CCHeather heatherControl = new CCHeather();//(wrapper, _vm.SelectedServer, _vm.Client);
+                CCHeather heatherControl = new CCHeather(heather);//(wrapper, _vm.SelectedServer, _vm.Client);
                 rootGrid.Children.Add(heatherControl);
                 heatherControl.Height = 30;
                 heatherControl.Width = 30;
                 heatherControl.HorizontalAlignment = HorizontalAlignment.Left;
                 heatherControl.VerticalAlignment = VerticalAlignment.Top;
                 heatherControl.RenderTransform = new TranslateTransform();
+                heatherControl.Background = new SolidColorBrush(Colors.Blue);
 
                 MouseDragElementBehavior beh = new MouseDragElementBehavior();
                 beh.Attach(heatherControl);
-                heatherControl.MouseDoubleClick += lamp_MouseDoubleClick;
+                heatherControl.MouseDoubleClick += heather_MouseDoubleClick;
             }
 
             PositionControls(rootGrid.Children.OfType<CCHeather>());
+        }
+
+        private void heather_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            CCHeather heatherControl = sender as CCHeather;
+            _vm.DetailsControl = new HeatherDetailView(new HeatherDetailVM(heatherControl.Heather));
         }
 
         private void ShowLamps()
@@ -163,6 +170,8 @@ namespace OPCDashboard
             {
                 WriteCSV();
             }
+            _vm.Client.UnsubscribeAllItems();
+            _vm.Client.Dispose();
         }
 
         private void WriteCSV()

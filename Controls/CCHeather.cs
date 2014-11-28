@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OPCLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,44 +16,28 @@ using System.Windows.Shapes;
 
 namespace CustomControls
 {
-    /// <summary>
-    /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-    ///
-    /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:CustomControls"
-    ///
-    ///
-    /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:CustomControls;assembly=CustomControls"
-    ///
-    /// You will also need to add a project reference from the project where the XAML file lives
-    /// to this project and Rebuild to avoid compilation errors:
-    ///
-    ///     Right click on the target project in the Solution Explorer and
-    ///     "Add Reference"->"Projects"->[Browse to and select this project]
-    ///
-    ///
-    /// Step 2)
-    /// Go ahead and use your control in the XAML file.
-    ///
-    ///     <MyNamespace:CCHeather/>
-    ///
-    /// </summary>
+    [TemplatePart(Name = "PART_border", Type = typeof(UIElement))]
+    [TemplateVisualState(Name = "Off", GroupName = "HeatherStates")]
+    [TemplateVisualState(Name = "On", GroupName = "HeatherStates")]
     public class CCHeather : Control, IDraggableOPCNode
     {
-        private TranslateTransform _translateTransform;
+        private Heather _heather;
         static CCHeather()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CCHeather), new FrameworkPropertyMetadata(typeof(CCHeather)));
         }
 
-        public string NodeName { get; set; }
+        public string NodeName
+        {
+            get
+            {
+                return Heather.Name;
+            }
+            set
+            {
+                Heather.Name = value;
+            }
+        }
         public TranslateTransform TranslateTransform
         {
             get
@@ -85,5 +70,46 @@ namespace CustomControls
             }
         }
 
+        public Heather Heather
+        {
+            get
+            {
+                return _heather;
+            }
+            set
+            {
+                if (_heather != null)
+                {
+                    _heather.PropertyChanged -= HeatherPropertyChanged;
+                }
+                _heather = value;
+                if (value != null)
+                {
+                    _heather.PropertyChanged += HeatherPropertyChanged;
+                    _heather.ObserveChanges();
+                }
+            }
+        }
+
+        public CCHeather()
+        {
+
+        }
+
+        public CCHeather(Heather heather)
+        {
+            Heather = heather;
+        }
+
+        private void HeatherPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            string prop = e.PropertyName;
+            switch (prop)
+            {
+                case Heather.ISBURNING:
+                    VisualStateManager.GoToState(this, Heather.IsBurning?"On":"Off", true);
+                    break;
+            }
+        }
     }
 }

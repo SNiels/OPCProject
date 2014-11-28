@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace OPCLib.ViewModels
 {
-    public class NodeBrowserVM:BaseVM
+    public class NodeBrowserVM:BasePropertyChanged
     {
         const int UPDATERATE = 500;
         private EasyDAClient _client;

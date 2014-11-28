@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OPCDashboard.ViewModels;
+using OPCLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +22,15 @@ namespace OPCDashboard.Controls
     /// </summary>
     public partial class HeatherDetailView : UserControl
     {
+
         public HeatherDetailView()
         {
+            InitializeComponent();
+        }
+
+        public HeatherDetailView(HeatherDetailVM vm)
+        {
+            DataContext = vm;
             InitializeComponent();
         }
     }

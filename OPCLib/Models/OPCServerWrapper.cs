@@ -29,7 +29,7 @@ namespace OPCLib.Models
         {
             get
             {
-                return GetLeaves().Select(l => new WCFNode { ItemId = l.ItemId });
+                 return  GetLeaves().Select(l => new WCFNode { ItemId = l.ItemId});
             }
         }
 
@@ -100,7 +100,7 @@ namespace OPCLib.Models
                 string readWrite = pieces[3];
                 if (!dictionary.ContainsKey(name))
                 {
-                    dictionary.Add(name, new Heather() { Name = name });
+                    dictionary.Add(name, new Heather(_client,this) { Name = name });
                 }
                 Heather heather = dictionary[name];
                 switch (prop.ToLower())
@@ -144,6 +144,17 @@ namespace OPCLib.Models
                 default:
                     return false;
             }
+        }
+
+        public object GetOPCNodeValue(string itemID)
+        {
+            return _client.ReadItemValue(Environment.MachineName, Server.ServerClass, itemID);
+        }
+
+        public object SetOPCNodeValue(string itemID, object value)
+        {
+            _client.WriteItemValue(Environment.MachineName, Server.ProgId, itemID, value);
+            return value;
         }
     }
 }

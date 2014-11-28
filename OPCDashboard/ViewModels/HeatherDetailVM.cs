@@ -16,8 +16,27 @@ namespace OPCDashboard.ViewModels
         private bool _isBurning;
         private int _current;
         private int _prefered;
+        private Heather _heather;
 
-        public Heather Heather { get; set; }
+        public Heather Heather
+        {
+            get
+            {
+                return _heather;
+            }
+            set
+            {
+                if(_heather!=null){
+                    _heather.PropertyChanged -= HeatherPropertyChanged;
+                }
+                _heather = value;
+                if (value != null)
+                {
+                    _heather.PropertyChanged += HeatherPropertyChanged;
+                    _heather.ObserveChanges();
+                }
+            }
+        }
 
         public string Name
         {
@@ -83,10 +102,30 @@ namespace OPCDashboard.ViewModels
         private void UpdateHeather()
         {
             Heather.Name = Name;
-            Heather.AutoWriteNode.Value = IsAuto;
-            Heather.IsBurningWriteNode.Value = IsBurning;
-            Heather.PreferedWriteNode.Value = Prefered;
-            Heather.CurrentWriteNode.Value = Current;
+            Heather.IsAuto = IsAuto;
+            Heather.IsBurning = IsBurning;
+            Heather.PreferedHeath = Prefered;
+            Heather.CurrentHeath = Current;
+        }
+
+        private void HeatherPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            string prop = e.PropertyName;
+            switch (prop)
+            {
+                case Heather.ISAUTO:
+                    IsAuto = Heather.IsAuto;
+                    break;
+                case Heather.ISBURNING:
+                    IsBurning = Heather.IsBurning;
+                    break;
+                case Heather.PREFEREDHEATH:
+                    Prefered = Heather.PreferedHeath;
+                    break;
+                case Heather.CURRENTHEATH:
+                    Current = Heather.CurrentHeath;
+                    break;
+            }
         }
     }
 }

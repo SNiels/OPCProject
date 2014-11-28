@@ -52,7 +52,7 @@ namespace OPCLib.Models
             {
                 if (!IsLeaf)
                     return null;
-                object value = OPCServerWrapper.Client.ReadItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId);
+                object value = Server.GetOPCNodeValue(_node.ItemId);
                 return value;
             }
             set
@@ -66,7 +66,7 @@ namespace OPCLib.Models
                     Boolean waarde;
                     if (Boolean.TryParse(value.ToString(), out waarde))
                     {
-                        OPCServerWrapper.Client.WriteItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId, waarde);
+                        Server.SetOPCNodeValue(_node.ItemId, waarde);
                     }
                     else
                     {
@@ -75,14 +75,14 @@ namespace OPCLib.Models
                 }
                 else if (_valueType == typeof(string))
                 {
-                    OPCServerWrapper.Client.WriteItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId, value.ToString());
+                    Server.SetOPCNodeValue(_node.ItemId, value.ToString());
                 }
                 else if (_valueType == typeof(double))
                 {
                     Double waarde;
                     if (Double.TryParse(value.ToString(), out waarde))
                     {
-                        OPCServerWrapper.Client.WriteItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId, waarde);
+                        Server.SetOPCNodeValue(_node.ItemId, waarde);
                     }
                     else
                     {
@@ -94,7 +94,7 @@ namespace OPCLib.Models
                     float waarde;
                     if (float.TryParse(value.ToString(), out waarde))
                     {
-                        OPCServerWrapper.Client.WriteItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId, waarde);
+                        Server.SetOPCNodeValue(_node.ItemId, waarde);
                     }
                     else
                     {
@@ -106,7 +106,7 @@ namespace OPCLib.Models
                     int waarde;
                     if (int.TryParse(value.ToString(), out waarde))
                     {
-                        OPCServerWrapper.Client.WriteItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId, waarde);
+                        Server.SetOPCNodeValue(_node.ItemId, waarde);
                     }
                     else
                     {
@@ -118,7 +118,7 @@ namespace OPCLib.Models
                     Byte waarde;
                     if (Byte.TryParse(value.ToString(), out waarde))
                     {
-                        OPCServerWrapper.Client.WriteItemValue(Environment.MachineName, Server.Server.ProgId, _node.ItemId, waarde);
+                        Server.SetOPCNodeValue(_node.ItemId, waarde);
                     }
                     else
                     {

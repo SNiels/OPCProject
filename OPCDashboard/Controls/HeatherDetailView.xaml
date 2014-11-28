@@ -42,6 +42,6 @@
             <Label Content="Huidige warmte: "/>
             <Label Content="{Binding Current}" />
         </StackPanel>
-
+        <Button Content="Update heather" Padding="4" Command="{Binding UpdateHeatherCommand}"/>
     </StackPanel>
 </UserControl>

@@ -88,7 +88,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\TreeViewOPCNode.cs" />
-    <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\NodeBrowserVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
