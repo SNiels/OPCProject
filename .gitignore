@@ -154,3 +154,14 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+
+Domotica Client/.idea/
+Domotica Client/build.gradle
+Domotica Client/Domotica Client.iml
+Domotica Client/gradle.properties
+Domotica Client/gradle/wrapper/gradle-wrapper.jar
+Domotica Client/gradle/wrapper/gradle-wrapper.properties
+Domotica Client/gradlew
+Domotica Client/gradlew.bat
+Domotica Client/settings.gradle
+Domotica Client/app/app.iml
