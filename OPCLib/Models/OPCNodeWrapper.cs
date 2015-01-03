@@ -8,8 +8,11 @@ namespace OPCLib.Models
 {
     public class OPCNodeWrapper
     {
+        const int UPDATERATE = 1000;
         private DANodeElement _node;
         private Type _valueType;
+        private int _ticket;
+        public event EventHandler ValueChanged;
         public OPCServerWrapper Server { get; set; }
 
         public bool IsLeaf { 
@@ -129,6 +132,40 @@ namespace OPCLib.Models
                 {
                     Console.WriteLine("Unsupported Type");
                 }
+            }
+        }
+
+        public bool ListenToUpdates
+        {
+            set
+            {
+                if (value)
+                {
+                    OPCServerWrapper.Client.ItemChanged += Client_ItemChanged;
+                    _ticket = OPCServerWrapper.Client.SubscribeItem(Environment.MachineName, Server.Server.ServerClass, ItemId, UPDATERATE);
+                }
+                else
+                {
+                    OPCServerWrapper.Client.UnsubscribeItem(_ticket);
+                    _ticket = -1;
+                    OPCServerWrapper.Client.ItemChanged -= Client_ItemChanged;
+                }
+            }
+        }
+
+        void Client_ItemChanged(object sender, EasyDAItemChangedEventArgs e)
+        {
+            if (e.Handle == _ticket)
+            {
+                OnValueChanged();
+            }
+        }
+
+        protected virtual void OnValueChanged()
+        {
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, null);
             }
         }
 

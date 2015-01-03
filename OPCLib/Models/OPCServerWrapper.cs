@@ -17,7 +17,12 @@ namespace OPCLib.Models
 
         public static EasyDAClient Client
         {
-            get { return _client; }
+            get {
+                if (_client == null)
+                {
+                    _client = new EasyDAClient();
+                }
+                return _client; }
             set { _client = value; }
         }
 
@@ -43,10 +48,20 @@ namespace OPCLib.Models
             return Server.Description;
         }
 
+        public static OPCServerWrapper GetOPCServerWrapper(string serverClass)
+        {
+            return GetOPCServerWrappers().Single(wrapper => wrapper.Server.ServerClass == serverClass);
+        }
+
         public static IEnumerable<OPCServerWrapper> GetOPCServerWrappers()
         {
             return _client.BrowseServers(Environment.MachineName)
                 .Select(server=>new OPCServerWrapper(server));
+        }
+
+        public OPCNodeWrapper GetOPCNodeWrapper(string itemId)
+        {
+            return GetOPCNodeWrappers().Single(wrapper => wrapper.ItemId == itemId);
         }
 
         public IEnumerable<OPCNodeWrapper> GetOPCNodeWrappers()
