@@ -55,7 +55,7 @@ namespace OPCLib.Models
 
         public static IEnumerable<OPCServerWrapper> GetOPCServerWrappers()
         {
-            return _client.BrowseServers(Environment.MachineName)
+            return Client.BrowseServers(Environment.MachineName)
                 .Select(server=>new OPCServerWrapper(server));
         }
 
@@ -66,7 +66,7 @@ namespace OPCLib.Models
 
         public IEnumerable<OPCNodeWrapper> GetOPCNodeWrappers()
         {
-            return _client.BrowseNodes(Environment.MachineName, Server.ServerClass, "", new DANodeFilter())
+            return Client.BrowseNodes(Environment.MachineName, Server.ServerClass, "", new DANodeFilter())
                 .Where(node=>!node.ItemId.StartsWith("_"))
                 .Select(node=>new OPCNodeWrapper(node,this));
         }
@@ -115,7 +115,7 @@ namespace OPCLib.Models
                 string readWrite = pieces[3];
                 if (!dictionary.ContainsKey(name))
                 {
-                    dictionary.Add(name, new Heather(_client,this) { Name = name });
+                    dictionary.Add(name, new Heather(Client,this) { Name = name });
                 }
                 Heather heather = dictionary[name];
                 switch (prop.ToLower())
@@ -163,12 +163,12 @@ namespace OPCLib.Models
 
         public object GetOPCNodeValue(string itemID)
         {
-            return _client.ReadItemValue(Environment.MachineName, Server.ServerClass, itemID);
+            return Client.ReadItemValue(Environment.MachineName, Server.ServerClass, itemID);
         }
 
         public object SetOPCNodeValue(string itemID, object value)
         {
-            _client.WriteItemValue(Environment.MachineName, Server.ProgId, itemID, value);
+            Client.WriteItemValue(Environment.MachineName, Server.ProgId, itemID, value);
             return value;
         }
     }
